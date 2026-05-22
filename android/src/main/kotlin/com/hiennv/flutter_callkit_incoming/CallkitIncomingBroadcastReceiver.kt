@@ -94,9 +94,15 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         when (action) {
             "${context.packageName}.${CallkitConstants.ACTION_CALL_INCOMING}" -> {
                 try {
-                    getCallkitNotificationManager()?.showIncomingNotification(data)
-                    sendEventFlutter(CallkitConstants.ACTION_CALL_INCOMING, data)
-                    addCall(context, Data.fromBundle(data))
+                    val incomingData = Data.fromBundle(data)
+                    if (incomingData.isFullScreen) {
+                        val intent = CallkitIncomingActivity.getIntent(context, data)
+                        context.startActivity(intent)
+                    } else {
+                        getCallkitNotificationManager()?.showIncomingNotification(data)
+                        sendEventFlutter(CallkitConstants.ACTION_CALL_INCOMING, data)
+                        addCall(context, incomingData)
+                    }
                 } catch (error: Exception) {
                     Log.e(TAG, null, error)
                 }
