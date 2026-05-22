@@ -32,19 +32,13 @@ class CallkitSoundPlayerManager(private val context: Context) {
 
     private var ringtone: Ringtone? = null
 
-<<<<<<< ours
     // Start Signify modification
     var isPlaying: Boolean = false
         private set
     // End Signify modification
-    
-=======
-    private var isPlaying: Boolean = false
 
     private var keepRingingForFullScreenIntent: Boolean = false
 
-
->>>>>>> theirs
     inner class ScreenOffCallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (isPlaying && !keepRingingForFullScreenIntent) {
