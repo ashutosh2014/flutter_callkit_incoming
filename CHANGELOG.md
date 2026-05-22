@@ -1,3 +1,25 @@
+## 3.1.0
+* Merge all 18 open upstream pull requests from [hiennguyen92/flutter_callkit_incoming](https://github.com/hiennguyen92/flutter_callkit_incoming/pulls):
+  * #551 — Accept call when app is killed (background handler)
+  * #574 — Disable hold call on iOS
+  * #630 — Fix decline/end event on lock screen (Android 14+)
+  * #633 — `isFullScreen` flag for Android incoming calls
+  * #666 — Android 14+ compatibility
+  * #764 — Fix duplicated notification on call connected (Android)
+  * #772 — Type-safe entities refactor (sealed `CallEvent` classes)
+  * #781 — Volume key mutes incoming call sound
+  * #783 — Stop ringtone/vibration on call connected
+  * #790 — Custom accept/decline button colors (Android)
+  * #792 — Ringtone/vibration during auto-lock
+  * #800 — Background message handler + foreground service
+  * #803 — iOS `onError` handler for `showCallkitIncoming`
+  * #805 — Dynamic CXProvider config for subsequent iOS calls
+  * #808 — Fix silently dropped calls when process kept alive (Android)
+  * #809 — Self-managed Telecom ConnectionService (Android)
+  * #812 — Notification channel and vibration improvements (Android)
+  * #813 — Fix empty call data on outgoing `actionCallAccept` (iOS)
+* Requires Dart SDK >=3.0.0 (sealed classes from #772).
+
 ## 3.0.1
 * Community-maintained fork published on pub.dev as `flutter_callkit_incoming_maintained`.
 * Add Swift Package Manager (SPM) support for iOS.
