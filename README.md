@@ -10,7 +10,7 @@ Replace the dependency and import path in your app:
 
 ```yaml
 dependencies:
-  flutter_callkit_incoming_maintained: ^3.1.1
+  flutter_callkit_incoming_maintained: ^3.1.2
 ```
 
 ```dart

@@ -1,6 +1,6 @@
 name: flutter_callkit_incoming_maintained
 description: Community-maintained fork of flutter_callkit_incoming — show CallKit incoming call UI in your Flutter app.
-version: 3.1.1
+version: 3.1.2
 homepage: https://github.com/ashutosh2014/flutter_callkit_incoming
 repository: https://github.com/ashutosh2014/flutter_callkit_incoming
 issue_tracker: https://github.com/ashutosh2014/flutter_callkit_incoming/issues

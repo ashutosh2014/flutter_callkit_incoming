@@ -1,3 +1,6 @@
+## 3.1.2
+* Fix Android build: add missing `android.os.Bundle` import in `FlutterCallkitIncomingPlugin.kt`.
+
 ## 3.1.1
 * Fix CocoaPods integration: rename podspec to `flutter_callkit_incoming_maintained.podspec` to match the pub package name.
 * Update iOS module import to `flutter_callkit_incoming_maintained`.
