@@ -55,6 +55,23 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
             send(event, body)
         }
 
+        fun acceptCallHandleCallback(bundle: Bundle) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                val extra = bundle.getSerializable(CallkitConstants.EXTRA_CALLKIT_EXTRA)
+                methodChannels.values.forEach {
+                    it.invokeMethod("acceptCallHandle", extra)
+                }
+            }, 750)
+        }
+
+        fun invokeFlutterCallback(data: Any) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                methodChannels.values.forEach {
+                    it.invokeMethod("invokeFlutter", data)
+                }
+            }, 750)
+        }
+
         /**
          * Send event to Flutter UI if there are active handlers, otherwise send to background
          * executor if registered.
@@ -232,6 +249,16 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
                 "getBackgroundHandler" -> {
                     val handle = getUserCallback(context)
                     result.success(handle)
+                }
+
+                "setAcceptCallHandle" -> {
+                    val args = call.arguments as? List<*>
+                    if (args != null && args.size >= 2) {
+                        val handle = args[0] as? Int ?: 0
+                        val key = args[1] as? String ?: ""
+                        saveHandle(context, key, handle)
+                    }
+                    result.success(null)
                 }
 
                 "showCallkitIncoming" -> {

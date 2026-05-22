@@ -15,6 +15,8 @@ import 'entities/entities.dart';
 /// * callConnected(dynamic)
 
 typedef BackgroundMessageHandler = Future<void> Function(CallEvent callEvent);
+typedef ActionEvent = void Function(Map<dynamic, dynamic> data);
+typedef Callback = void Function(dynamic data);
 
 @pragma('vm:entry-point')
 void _flutterCallkitIncomingCallbackDispatcher() {
@@ -83,6 +85,36 @@ class FlutterCallkitIncoming {
   /// }
   static Stream<CallEvent?> get onEvent =>
       _eventChannel.receiveBroadcastStream().map(_receiveCallEvent);
+
+  /// Handle accept call from background when the app was killed.
+  static void acceptCallHandle(ActionEvent handler) {
+    final rawHandle = PluginUtilities.getCallbackHandle(handler)?.toRawHandle();
+    _channel.invokeMethod('setAcceptCallHandle', [
+      rawHandle,
+      'acceptCallHandle',
+    ]);
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == 'acceptCallHandle') {
+        handler(callActionBody(call.arguments));
+      }
+    });
+  }
+
+  /// Send data to Flutter from background when the app was killed.
+  static void invokeFlutter(Callback callback) {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == 'invokeFlutter') {
+        callback(call.arguments);
+      }
+    });
+  }
+
+  static Map<dynamic, dynamic> callActionBody(dynamic value) {
+    if (value != null && value is Map) {
+      return value;
+    }
+    return {};
+  }
 
   /// Show Callkit Incoming.
   /// On iOS, using Callkit. On Android, using a custom UI.
