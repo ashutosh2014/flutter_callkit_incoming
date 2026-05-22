@@ -395,18 +395,11 @@ class FlutterCallkitIncomingPlugin : FlutterPlugin, MethodCallHandler, ActivityA
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         methodChannels.remove(binding.binaryMessenger)?.setMethodCallHandler(null)
         eventChannels.remove(binding.binaryMessenger)?.setStreamHandler(null)
-<<<<<<< ours
-
-        // Only destroy managers when all engine bindings are detached
-        // This prevents issues when foreground services detach but main app is still running
-        if (methodChannels.isEmpty() && eventChannels.isEmpty()) {
-=======
         // Only destroy and null the shared managers when the LAST engine detaches.
         // When multiple engines are attached (e.g. main UI engine + FCM background
         // isolate engine), tearing down the main engine must not pull the managers
         // out from under the background isolate that still needs them.
-        if (methodChannels.isEmpty()) {
->>>>>>> theirs
+        if (methodChannels.isEmpty() && eventChannels.isEmpty()) {
             instance.callkitSoundPlayerManager?.destroy()
             instance.callkitNotificationManager?.destroy()
             instance.callkitSoundPlayerManager = null
