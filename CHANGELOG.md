@@ -1,10 +1,7 @@
 ## 3.0.1
-<<<<<<< ours
 * Community-maintained fork published on pub.dev as `flutter_callkit_incoming_maintained`.
 * Add Swift Package Manager (SPM) support for iOS.
-=======
 * Add optional `onError` completion handler to `showCallkitIncoming` for iOS. Allows the host application to handle errors returned by reportNewIncomingCall, providing visibility into failures caused by system-level restrictions (e.g., Do Not Disturb mode) or invalid configurations.
->>>>>>> theirs
 
 ## 3.0.0
 * Using Plugin DSL for Android, thank @AAkira https://github.com/hiennguyen92/flutter_callkit_incoming/pull/743
