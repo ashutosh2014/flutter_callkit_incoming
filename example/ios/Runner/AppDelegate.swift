@@ -3,7 +3,7 @@ import CallKit
 import AVFAudio
 import PushKit
 import Flutter
-import flutter_callkit_incoming
+import flutter_callkit_incoming_maintained
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate, PKPushRegistryDelegate, CallkitIncomingAppDelegate {

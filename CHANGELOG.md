@@ -1,3 +1,7 @@
+## 3.1.1
+* Fix CocoaPods integration: rename podspec to `flutter_callkit_incoming_maintained.podspec` to match the pub package name.
+* Update iOS module import to `flutter_callkit_incoming_maintained`.
+
 ## 3.1.0
 * Merge all 18 open upstream pull requests from [hiennguyen92/flutter_callkit_incoming](https://github.com/hiennguyen92/flutter_callkit_incoming/pulls):
   * #551 — Accept call when app is killed (background handler)

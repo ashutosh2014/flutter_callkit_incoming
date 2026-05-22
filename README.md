@@ -10,7 +10,7 @@ Replace the dependency and import path in your app:
 
 ```yaml
 dependencies:
-  flutter_callkit_incoming_maintained: ^3.0.1
+  flutter_callkit_incoming_maintained: ^3.1.1
 ```
 
 ```dart
@@ -405,10 +405,10 @@ SwiftFlutterCallkitIncomingPlugin.sharedInstance?.showCallkitIncoming(data, from
 
 **Objective-C:**
 ```objc
-#if __has_include(<flutter_callkit_incoming/flutter_callkit_incoming-Swift.h>)
-#import <flutter_callkit_incoming/flutter_callkit_incoming-Swift.h>
+#if __has_include(<flutter_callkit_incoming_maintained/flutter_callkit_incoming_maintained-Swift.h>)
+#import <flutter_callkit_incoming_maintained/flutter_callkit_incoming_maintained-Swift.h>
 #else
-#import "flutter_callkit_incoming-Swift.h"
+#import "flutter_callkit_incoming_maintained-Swift.h"
 #endif
 
 Data * data = [[Data alloc]initWithId:@"44d915e1-5ff4-4bed-bf13-c423048ec97a" nameCaller:@"Hien Nguyen" handle:@"0123456789" type:1];
