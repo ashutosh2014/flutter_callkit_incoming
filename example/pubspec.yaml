@@ -1,5 +1,5 @@
-name: flutter_callkit_incoming_example
-description: Demonstrates how to use the flutter_callkit_incoming plugin.
+name: flutter_callkit_incoming_maintained_example
+description: Demonstrates how to use the flutter_callkit_incoming_maintained plugin.
 
 publish_to: "none"
 
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_callkit_incoming:
+  flutter_callkit_incoming_maintained:
     path: ../
 
   firebase_core: ^3.15.2

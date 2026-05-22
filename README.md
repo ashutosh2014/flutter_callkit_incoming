@@ -1,13 +1,29 @@
-# Flutter Callkit Incoming
+# Flutter Callkit Incoming (Maintained Fork)
+
+> **Fork notice:** This package is a community-maintained fork of [`flutter_callkit_incoming`](https://pub.dev/packages/flutter_callkit_incoming) on pub.dev. It is published as [`flutter_callkit_incoming_maintained`](https://pub.dev/packages/flutter_callkit_incoming_maintained) and maintained at [ashutosh2014/flutter_callkit_incoming](https://github.com/ashutosh2014/flutter_callkit_incoming).
 
 A Flutter plugin to show incoming call in your Flutter app (Custom for Android/Callkit for iOS).
 
-[![pub package](https://img.shields.io/pub/v/flutter_callkit_incoming.svg)](https://pub.dev/packages/flutter_callkit_incoming)
-[![pub points](https://img.shields.io/pub/points/flutter_callkit_incoming?label=pub%20points)](https://pub.dev/packages/flutter_callkit_incoming/score)
-[![GitHub stars](https://img.shields.io/github/stars/hiennguyen92/flutter_callkit_incoming.svg?style=social)](https://github.com/hiennguyen92/flutter_callkit_incoming/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/hiennguyen92/flutter_callkit_incoming.svg?style=social)](https://github.com/hiennguyen92/flutter_callkit_incoming/network)
-[![GitHub license](https://img.shields.io/github/license/hiennguyen92/flutter_callkit_incoming.svg)](https://github.com/hiennguyen92/flutter_callkit_incoming/blob/master/LICENSE)
-[![Build Status](https://github.com/hiennguyen92/flutter_callkit_incoming/actions/workflows/main.yml/badge.svg)](https://github.com/hiennguyen92/flutter_callkit_incoming/actions/workflows/main.yml)
+### Migrating from `flutter_callkit_incoming`
+
+Replace the dependency and import path in your app:
+
+```yaml
+dependencies:
+  flutter_callkit_incoming_maintained: ^3.0.1
+```
+
+```dart
+import 'package:flutter_callkit_incoming_maintained/flutter_callkit_incoming_maintained.dart';
+```
+
+Native Android/iOS setup (ProGuard rules, PushKit, AppDelegate, etc.) stays the same.
+
+[![pub package](https://img.shields.io/pub/v/flutter_callkit_incoming_maintained.svg)](https://pub.dev/packages/flutter_callkit_incoming_maintained)
+[![pub points](https://img.shields.io/pub/points/flutter_callkit_incoming_maintained?label=pub%20points)](https://pub.dev/packages/flutter_callkit_incoming_maintained/score)
+[![GitHub stars](https://img.shields.io/github/stars/ashutosh2014/flutter_callkit_incoming.svg?style=social)](https://github.com/ashutosh2014/flutter_callkit_incoming/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/ashutosh2014/flutter_callkit_incoming.svg?style=social)](https://github.com/ashutosh2014/flutter_callkit_incoming/network)
+[![GitHub license](https://img.shields.io/github/license/ashutosh2014/flutter_callkit_incoming.svg)](https://github.com/ashutosh2014/flutter_callkit_incoming/blob/master/LICENSE)
 
 ## Sponsors
 
@@ -47,13 +63,13 @@ For version >= v2.5.0, please make sure install and use Java SDK version >= 17 (
 
 **Run this command:**
 ```bash
-flutter pub add flutter_callkit_incoming
+flutter pub add flutter_callkit_incoming_maintained
 ```
 
 **Or add to pubspec.yaml:**
 ```yaml
 dependencies:
-  flutter_callkit_incoming: ^latest
+  flutter_callkit_incoming_maintained: ^latest
 ```
 
 ### 2. Configure Project
@@ -98,7 +114,7 @@ The following rule needs to be added in the `proguard-rules.pro` to avoid obfusc
 
 #### Import
 ```dart
-import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+import 'package:flutter_callkit_incoming_maintained/flutter_callkit_incoming_maintained.dart';
 ```
 
 #### Show Incoming Call
@@ -657,8 +673,9 @@ class MainActivity: FlutterActivity(){
 ## 📁 Source Code
 
 Please checkout repo GitHub:
-- [https://github.com/hiennguyen92/flutter_callkit_incoming](https://github.com/hiennguyen92/flutter_callkit_incoming)
-- [Example](https://github.com/hiennguyen92/flutter_callkit_incoming/blob/master/example/lib/main.dart)
+- [https://github.com/ashutosh2014/flutter_callkit_incoming](https://github.com/ashutosh2014/flutter_callkit_incoming)
+- [Original package on pub.dev](https://pub.dev/packages/flutter_callkit_incoming)
+- [Example](https://github.com/ashutosh2014/flutter_callkit_incoming/blob/master/example/lib/main.dart)
 
 ## 📱 Pushkit - Received VoIP and Wake App from Terminated State (iOS Only)
 

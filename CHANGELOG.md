@@ -1,3 +1,7 @@
+## 3.0.1
+* Community-maintained fork published on pub.dev as `flutter_callkit_incoming_maintained`.
+* Add Swift Package Manager (SPM) support for iOS.
+
 ## 3.0.0
 * Using Plugin DSL for Android, thank @AAkira https://github.com/hiennguyen92/flutter_callkit_incoming/pull/743
 * Add Android native callback, thank @joshoconnor89 https://github.com/hiennguyen92/flutter_callkit_incoming/pull/736

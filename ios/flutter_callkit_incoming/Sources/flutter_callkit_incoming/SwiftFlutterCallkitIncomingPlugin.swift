@@ -5,6 +5,7 @@ import AVFoundation
 import UserNotifications
 
 @available(iOS 10.0, *)
+@objc(FlutterCallkitIncomingPlugin)
 public class SwiftFlutterCallkitIncomingPlugin: NSObject, FlutterPlugin, CXProviderDelegate {
     
     static let ACTION_DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP = "com.hiennv.flutter_callkit_incoming.DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP"
