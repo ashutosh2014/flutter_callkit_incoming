@@ -1138,6 +1138,7 @@ class CallkitNotificationManager(
                                         Uri.fromParts("package", it.packageName, null)
                                     )
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                     it.startActivity(intent)
                                 }
                             } else {
@@ -1152,6 +1153,7 @@ class CallkitNotificationManager(
                                         Uri.fromParts("package", it.packageName, null)
                                     )
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                     it.startActivity(intent)
                                 }
                             }
