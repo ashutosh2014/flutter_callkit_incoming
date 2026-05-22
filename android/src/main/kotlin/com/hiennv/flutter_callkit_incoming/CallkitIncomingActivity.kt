@@ -111,7 +111,6 @@ class CallkitIncomingActivity : Activity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
         }
         transparentStatusAndNavigation()
         setContentView(R.layout.activity_callkit_incoming)

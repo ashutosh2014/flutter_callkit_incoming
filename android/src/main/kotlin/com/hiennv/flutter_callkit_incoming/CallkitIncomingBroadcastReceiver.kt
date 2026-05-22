@@ -1,12 +1,16 @@
 package com.hiennv.flutter_callkit_incoming
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.telecom.TelecomManager
 import android.util.Log
+import androidx.core.content.ContextCompat
 
 class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
@@ -108,6 +112,61 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         return FlutterCallkitIncomingPlugin.getInstance()?.getCallkitNotificationManager()
     }
 
+    @SuppressLint("MissingPermission")
+    private fun registerTelecomIncomingCall(context: Context, data: Bundle) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        val parsed = try {
+            Data.fromBundle(data)
+        } catch (e: Exception) {
+            null
+        } ?: return
+        if (parsed.id.isEmpty()) return
+        if (CallkitConnection.find(parsed.id) != null) {
+            Log.d(TAG, "Telecom call already registered id=${parsed.id} — skip")
+            return
+        }
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.MANAGE_OWN_CALLS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.w(TAG, "MANAGE_OWN_CALLS not granted — Telecom incoming skipped")
+            return
+        }
+        val telecom = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager ?: return
+        val manager = InAppCallManager(context.applicationContext)
+        val handle = manager.getPhoneAccountHandle()
+        val extras = Bundle().apply {
+            putBundle(CallkitConnection.EXTRA_CALL_BUNDLE, data)
+            putInt(
+                TelecomManager.EXTRA_INCOMING_VIDEO_STATE,
+                android.telecom.VideoProfile.STATE_AUDIO_ONLY,
+            )
+        }
+        try {
+            telecom.addNewIncomingCall(handle, extras)
+            Log.d(TAG, "Telecom addNewIncomingCall id=${parsed.id}")
+        } catch (e: SecurityException) {
+            Log.w(TAG, "Telecom addNewIncomingCall rejected: ${e.message}")
+        } catch (e: Exception) {
+            Log.w(TAG, "Telecom addNewIncomingCall error: ${e.message}")
+        }
+    }
+
+    private fun driveTelecomConnection(context: Context, data: Bundle, action: String) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
+        val parsed = try {
+            Data.fromBundle(data)
+        } catch (e: Exception) {
+            null
+        } ?: return
+        val conn = CallkitConnection.find(parsed.id) ?: return
+        when (action) {
+            CallkitConstants.ACTION_CALL_ACCEPT -> conn.markAccepted()
+            CallkitConstants.ACTION_CALL_DECLINE -> conn.markDeclined(context)
+            CallkitConstants.ACTION_CALL_ENDED -> conn.markEnded()
+            CallkitConstants.ACTION_CALL_TIMEOUT -> conn.markMissed()
+        }
+    }
+
 
     @SuppressLint("MissingPermission")
     override fun onReceive(context: Context, intent: Intent) {
@@ -119,6 +178,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
         when (action) {
             "${context.packageName}.${CallkitConstants.ACTION_CALL_INCOMING}" -> {
                 try {
+                    registerTelecomIncomingCall(context, data)
                     val incomingData = Data.fromBundle(data)
                     if (incomingData.isFullScreen) {
                         val intent = CallkitIncomingActivity.getIntent(context, data)
@@ -150,7 +210,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_ACCEPT}" -> {
                 try {
-                    // Log.d(TAG, "[CALLKIT] 📱 ACTION_CALL_ACCEPT")
+                    driveTelecomConnection(context, data, CallkitConstants.ACTION_CALL_ACCEPT)
                     FlutterCallkitIncomingPlugin.notifyEventCallbacks(CallkitEventCallback.CallEvent.ACCEPT, data)
                     // start service and show ongoing call when call is accepted
                     CallkitNotificationService.startServiceWithAction(
@@ -167,8 +227,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_DECLINE}" -> {
                 try {
-                    // Log.d(TAG, "[CALLKIT] 📱 ACTION_CALL_DECLINE")           
-                    // Notify native decline callbacks
+                    driveTelecomConnection(context, data, CallkitConstants.ACTION_CALL_DECLINE)
                     FlutterCallkitIncomingPlugin.notifyEventCallbacks(CallkitEventCallback.CallEvent.DECLINE, data)
                     // clear notification
                     getCallkitNotificationManager()?.clearIncomingNotification(data, false)
@@ -181,6 +240,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_ENDED}" -> {
                 try {
+                    driveTelecomConnection(context, data, CallkitConstants.ACTION_CALL_ENDED)
                     FlutterCallkitIncomingPlugin.notifyEventCallbacks(CallkitEventCallback.CallEvent.END, data)
                     // clear notification and stop service
                     getCallkitNotificationManager()?.clearIncomingNotification(data, false)
@@ -194,6 +254,7 @@ class CallkitIncomingBroadcastReceiver : BroadcastReceiver() {
 
             "${context.packageName}.${CallkitConstants.ACTION_CALL_TIMEOUT}" -> {
                 try {
+                    driveTelecomConnection(context, data, CallkitConstants.ACTION_CALL_TIMEOUT)
                     // clear notification and show miss notification
                     val notificationManager = getCallkitNotificationManager()
                     notificationManager?.clearIncomingNotification(data, false)

@@ -45,6 +45,8 @@
         <activity
             android:exported="false"
             android:theme="@style/TranslucentTheme"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
             android:name="com.hiennv.flutter_callkit_incoming.TransparentActivity"/>
 
         <receiver
@@ -72,7 +74,8 @@
 
         <service
             android:name="com.hiennv.flutter_callkit_incoming.CallkitConnectionService"
-            android:permission="android.permission.BIND_CONNECTION_SERVICE"
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
+            android:foregroundServiceType="phoneCall"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.telecom.ConnectionService" />

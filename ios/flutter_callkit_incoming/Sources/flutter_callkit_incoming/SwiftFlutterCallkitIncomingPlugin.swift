@@ -570,6 +570,10 @@ public class SwiftFlutterCallkitIncomingPlugin: NSObject, FlutterPlugin, CXProvi
             call.endCall()
         }
         self.callManager.removeAllCalls()
+        sendEvent("com.hiennv.flutter_callkit_incoming.PROVIDER_DID_RESET", [:])
+        if let appDelegate = UIApplication.shared.delegate as? CallkitIncomingAppDelegate {
+            appDelegate.providerDidReset()
+        }
     }
     
     public func provider(_ provider: CXProvider, perform action: CXStartCallAction) {

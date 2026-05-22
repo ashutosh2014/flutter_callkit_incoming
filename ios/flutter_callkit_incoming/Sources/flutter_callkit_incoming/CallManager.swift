@@ -22,8 +22,11 @@ class CallManager: NSObject {
     
     func startCall(_ data: Data) {
         let handle = CXHandle(type: self.getHandleType(data.handleType), value: data.getEncryptHandle())
-        let uuid = UUID(uuidString: data.uuid)
-        let startCallAction = CXStartCallAction(call: uuid!, handle: handle)
+        guard let uuid = UUID(uuidString: data.uuid) else {
+            NSLog("[CallkitIncoming] startCall: invalid UUID '\(data.uuid)' — ignored")
+            return
+        }
+        let startCallAction = CXStartCallAction(call: uuid, handle: handle)
         startCallAction.isVideo = data.type > 0
         let callTransaction = CXTransaction()
         callTransaction.addAction(startCallAction)
@@ -37,7 +40,7 @@ class CallManager: NSObject {
             callUpdate.supportsUngrouping = data.supportsUngrouping
             callUpdate.hasVideo = data.type > 0 ? true : false
             callUpdate.localizedCallerName = data.nameCaller
-            self.sharedProvider?.reportCall(with: uuid!, updated: callUpdate)
+            self.sharedProvider?.reportCall(with: uuid, updated: callUpdate)
         })
     }
     
